@@ -94,89 +94,82 @@ https://lists.centos.org/pipermail/centos-announce/2015-December/021555.html.
 安装
 ============
 
-安装测试 Glances 有多种途径供您选择。
+想要安装测试 Glances 的话，有多种途径供您选择。
 
-Glances Auto Install script: the total way
+Glances 自动安装脚本：完全版
 ------------------------------------------
 
-To install both dependencies and latest Glances production ready version
-(aka *master* branch), just enter the following command line:
+同时安装各种依赖和新鲜出厂的 Glances（即 *master* 分支），只需要执行如下命令：
 
 .. code-block:: console
 
     curl -L https://bit.ly/glances | /bin/bash
 
-or
+或者
 
 .. code-block:: console
 
     wget -O- https://bit.ly/glances | /bin/bash
 
-*Note*: Only supported on some GNU/Linux distributions. If you want to
-support other distributions, please contribute to `glancesautoinstall`_.
+*注意*： 只支持一部分 GNU/Linux 发布版。如果你能提供其他发布版的支持，请提交到
+`glancesautoinstall`_。
 
-PyPI: The simple way
+PyPI：极简版
 --------------------
 
-Glances is on ``PyPI``. By using PyPI, you are sure to have the latest
-stable version.
+Glances 已经纳入到 ``PyPI`` 了。使用 PyPI，可以安装最新稳定版。
 
-To install, simply use ``pip``:
+安装只需使用 ``pip``：
 
 .. code-block:: console
 
     pip install glances
 
-*Note*: Python headers are required to install `psutil`_. For example,
-on Debian/Ubuntu you need to install first the *python-dev* package.
-For Fedora/CentOS/RHEL install first *python-devel* package. For Windows,
-just install psutil from the binary installation file.
+*注意*：安装 `psutil`_需要有 Python 头文件。如，在 Debian/Ubuntu 平台，需要先
+安装 *python-dev* 包。在 Fedora/CentOS/RHEL （红帽系）需要先安装
+*python-devel* 包。在 Windows 上，只需要用二进制安装文件安装 psutil。
 
-*Note 2 (for the Wifi plugin)*: If you want to use the Wifi plugin, you need
-to install the *wireless-tools* package on your system.
+*注意 2 （wifi 插件）*：如果想要用 Wifi 插件，需要系统里安装过 *wireless-tools*。
 
-You can also install the following libraries in order to use optional
-features (like the Web interface, exports modules...):
+当然，你也可以安装下面的包来使用可选的其它功能（如 Web 界面，各种导出模块等）：
 
 .. code-block:: console
 
     pip install glances[action,browser,cloud,cpuinfo,chart,docker,export,folders,gpu,ip,raid,snmp,web,wifi]
 
-To upgrade Glances to the latest version:
+升级 Glances 到最新版
 
 .. code-block:: console
 
     pip install --upgrade glances
     pip install --upgrade glances[...]
 
-If you need to install Glances in a specific user location, use:
+如果需要把 Glances 安装到自定义的位置，使用：
 
 .. code-block:: console
 
-    export PYTHONUSERBASE=~/mylocalpath
-    pip install --user glances
+    export PYTHONUSERBASE=~/自定义路径
+    pip install --user glances
 
-Docker: the funny way
+Docker：逗逼版
 ---------------------
 
-A Glances container is available. It will include the latest development
-HEAD version. You can use it to monitor your server and all your others
-containers !
+Glances 容器也是有的。这里会是最新开发的 `HEAD` 版本。可以用这个容器来监控你的
+服务器和所有其它容器！
 
-Get the Glances container:
+Glances 容器可以这样使用：
 
 .. code-block:: console
 
     docker pull nicolargo/glances
 
-Run the container in *console mode*:
+在*控制台模式*使用容器：
 
 .. code-block:: console
 
     docker run -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host -it docker.io/nicolargo/glances
 
-Additionally, if you want to use your own glances.conf file, you can
-create your own Dockerfile:
+另外，如果你想用自己的 `glances.conf` 文件，可以用如下 `Dockerfile` 创建：
 
 .. code-block:: console
 
@@ -184,17 +177,16 @@ create your own Dockerfile:
     COPY glances.conf /glances/conf/glances.conf
     CMD python -m glances -C /glances/conf/glances.conf $GLANCES_OPT
 
-Alternatively, you can specify something along the same lines with
-docker run options:
+还有一个方法，可以在运行 docker 时用 run 的选项加入配置：
 
 .. code-block:: console
 
     docker run -v ./glances.conf:/glances/conf/glances.conf -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host -it docker.io/nicolargo/glances
 
-Where ./glances.conf is a local directory containing your glances.conf file.
+这里 ./glances.conf 是主机中有 `glances.conf` 配置文件的目录。
 
-Run the container in *Web server mode* (notice the `GLANCES_OPT` environment
-variable setting parameters for the glances startup command):
+以 *Web 服务器模式* 运行这个容器（注意 `GLANCES_OPT` 选项指定
+glances 起始命令的设置参数）：
 
 .. code-block:: console
 
@@ -203,30 +195,29 @@ variable setting parameters for the glances startup command):
 GNU/Linux
 ---------
 
-`Glances` is available on many Linux distributions, so you should be
-able to install it using your favorite package manager. Be aware that
-Glances may not be the latest one using this method.
+`Glances` 已经进入了很多 Linux 发布版。大多数情况下，可以直接使用你惯用的
+包管理器安装。只是使用包管理安装的 Glances 可能不是最新版。
 
 FreeBSD
 -------
 
-To install the binary package:
+安装二进制包：
 
 .. code-block:: console
 
     # pkg install py27-glances
 
-To install Glances from ports:
+使用 ports 安装：
 
 .. code-block:: console
 
     # cd /usr/ports/sysutils/py-glances/
     # make install clean
 
-macOS
+macOS 苹果电脑
 -----
 
-macOS users can install Glances using ``Homebrew`` or ``MacPorts``.
+macOS 用户可以用 ``Homebrew`` 或者 ``MacPorts`` 安装 Glances。
 
 Homebrew
 ````````
@@ -246,20 +237,18 @@ MacPorts
 Windows
 -------
 
-Install `Python`_ for Windows (Python 2.7.9+ and 3.4+ ship with pip) and
-then just:
+先安装 Windows 版 `Python` （Python 2.7.9+ 或 3.4+，自带 pip），然后：
 
 .. code-block:: console
 
     $ pip install glances
 
-Android
+Android 安卓
 -------
 
-You need a rooted device and the `Termux`_ application (available on the
-Google Store).
+需要先刷机（root），且安装有 `Termux`_App（可以在 Google 商店安装）。
 
-Start Termux on your device and enter:
+启动 Termux 并输入：
 
 .. code-block:: console
 
@@ -269,19 +258,18 @@ Start Termux on your device and enter:
     $ pip install bottle
     $ pip install glances
 
-And start Glances:
+运行 Glances：
 
 .. code-block:: console
 
     $ glances
 
-You can also run Glances in server mode (-s or -w) in order to remotely
-monitor your Android device.
+可以用服务器模式（-s or -w）运行 Glances，以便远程监控安卓设备。
 
-Source
+源码
 ------
 
-To install Glances from source:
+源码安装 Glances：
 
 .. code-block:: console
 
@@ -289,98 +277,103 @@ To install Glances from source:
     $ cd glances-*
     # python setup.py install
 
-*Note*: Python headers are required to install psutil.
+*注意*： 安装 psutil 需要有 Python 头文件。
 
 Chef
 ----
 
-An awesome ``Chef`` cookbook is available to monitor your infrastructure:
-https://supermarket.chef.io/cookbooks/glances (thanks to Antoine Rouyer)
+也可以用这份超赞的 ``Chef`` cookbook 来监控你的服务器：
+https://supermarket.chef.io/cookbooks/glances (荣耀归于 Antoine Rouyer)
 
 Puppet
 ------
 
-You can install Glances using ``Puppet``: https://github.com/rverchere/puppet-glances
+使用 ``Puppet`` 安装 Glances： https://github.com/rverchere/puppet-glances
 
-Usage
+使用方法
 =====
 
-For the standalone mode, just run:
+单机模式，简单执行：
 
 .. code-block:: console
 
     $ glances
 
-For the Web server mode, run:
+Web 服务器模式，执行:
 
 .. code-block:: console
 
     $ glances -w
 
-and enter the URL ``http://<ip>:61208`` in your favorite web browser.
+然后在浏览器中输入网址 URL ``http://<ip>:61208`` 监控你的主机。
 
-For the client/server mode, run:
+远程 client/server 模式，执行如下代码：
+
+在服务器端，运行：
 
 .. code-block:: console
 
     $ glances -s
 
-on the server side and run:
+在客户端，运行：
 
 .. code-block:: console
 
     $ glances -c <ip>
 
-on the client one.
-
-You can also detect and display all Glances servers available on your
-network or defined in the configuration file:
+也可以探测并显示网络中所有可用的 Glances 服务器，或者根据配置文件查找：
 
 .. code-block:: console
 
     $ glances --browser
 
-and RTFM, always.
+当然了，先读文档（RTFM），一贯的。
 
-Documentation
+文档
 =============
 
-For complete documentation have a look at the readthedocs_ website.
+完整的文档，请在 readthedocs_ 网站查看.
 
-If you have any question (after RTFM!), please post it on the official Q&A `forum`_.
+如果你（读了文档之后）还有问题，请在官方 Q&A `论坛`_发帖询问。
 
-Gateway to other services
+相关链接
 =========================
 
-Glances can export stats to: ``CSV`` file, ``JSON`` file, ``InfluxDB``, ``Cassandra``, ``CouchDB``,
-``OpenTSDB``, ``Prometheus``, ``StatsD``, ``ElasticSearch``, ``RabbitMQ/ActiveMQ``,
-``ZeroMQ``, ``Kafka``, ``Riemann`` and ``Restful`` server.
+Glances 可以把监控信息导出到： ``CSV`` 文件， ``JSON`` 文件， ``InfluxDB``， ``Cassandra``， ``CouchDB``，
+``OpenTSDB``， ``Prometheus``， ``StatsD``， ``ElasticSearch``， ``RabbitMQ/ActiveMQ``，
+``ZeroMQ``， ``Kafka``， ``Riemann`` 和 ``Restful`` 服务器。
 
-How to contribute ?
+怎样贡献代码？
 ===================
 
-If you want to contribute to the Glances project, read this `wiki`_ page.
+如果想向 Glances 项目提交代码，请阅读这个 `wiki`_ 页面。
 
-There is also a chat dedicated to the Glances developers:
+这里也有一个 Glances 开发者出没的 Chat：
 
 .. image:: https://badges.gitter.im/Join%20Chat.svg
         :target: https://gitter.im/nicolargo/glances?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
-Author
+作者
 ======
 
 Nicolas Hennion (@nicolargo) <nicolas@nicolargo.com>
 
-License
+README 中文译者
+======
+
+曲晓峰 (@quxiaofeng) <xiaofeng.qu.hk@ieee.org>
+
+版权文件
 =======
 
-LGPLv3. See ``COPYING`` for more details.
+LGPLv3。细节详见  ``COPYING`` 。
 
 .. _psutil: https://github.com/giampaolo/psutil
 .. _glancesautoinstall: https://github.com/nicolargo/glancesautoinstall
 .. _@nicolargo: https://twitter.com/nicolargo
+.. _@quxiaofeng: https://zhihu.com/quxiaofeng
 .. _Python: https://www.python.org/getit/
 .. _Termux: https://play.google.com/store/apps/details?id=com.termux
 .. _readthedocs: https://glances.readthedocs.io/
-.. _forum: https://groups.google.com/forum/?hl=en#!forum/glances-users
+.. _论坛: https://groups.google.com/forum/?hl=en#!forum/glances-users
 .. _wiki: https://github.com/nicolargo/glances/wiki/How-to-contribute-to-Glances-%3F
