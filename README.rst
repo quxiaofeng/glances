@@ -1,5 +1,5 @@
 ===============================
-Glances - An eye on your system
+Glances - 帮你瞅着你的主机
 ===============================
 
 .. image:: https://img.shields.io/pypi/v/glances.svg
@@ -11,11 +11,11 @@ Glances - An eye on your system
 
 .. image:: https://img.shields.io/travis/nicolargo/glances/master.svg?maxAge=3600&label=Linux%20/%20BSD%20/%20macOS
     :target: https://travis-ci.org/nicolargo/glances
-    :alt: Linux tests (Travis)
+    :alt: Linux 测试 (Travis)
 
 .. image:: https://img.shields.io/appveyor/ci/nicolargo/glances/master.svg?maxAge=3600&label=Windows
     :target: https://ci.appveyor.com/project/nicolargo/glances
-    :alt: Windows tests (Appveyor)
+    :alt: Windows 测试 (Appveyor)
 
 .. image:: https://img.shields.io/scrutinizer/g/nicolargo/glances.svg
     :target: https://scrutinizer-ci.com/g/nicolargo/glances/
@@ -23,21 +23,20 @@ Glances - An eye on your system
 .. image:: https://img.shields.io/badge/Donate-PayPal-green.svg
     :target: https://www.paypal.me/nicolargo
 
-Follow Glances on Twitter: `@nicolargo`_
+关注 Glances 的 Twitter: `@nicolargo`_
 
-Summary
+简介
 =======
 
-**Glances** is a cross-platform monitoring tool which aims to present a
-maximum of information in a minimum of space through a curses or Web
-based interface. It can adapt dynamically the displayed information
-depending on the user interface size.
+**Glances** 是一款跨平台的系统监控工具。他的主要目标是在最少的空间里展示
+最多的信息。他提供命令行模式，也可以使用 web 接口。还可以动态适应用户界面
+的大小，合适的展示信息。
 
 .. image:: https://raw.githubusercontent.com/nicolargo/glances/develop/docs/_static/glances-summary.png
 
-It can also work in client/server mode. Remote monitoring could be done
-via terminal, Web interface or API (XML-RPC and RESTful). Stats can also
-be exported to files or external time/value databases.
+该工具也可以工作与客户机服务器模式（C/S 远程监控）。这一远程监控可以是终端、
+可以是 web，也可以 API（XML-RPC 或 RESTful）调用。各种状态信息也可以导出
+到文件，或者是时值对应的数据库(time/value)。
 
 .. image:: https://raw.githubusercontent.com/nicolargo/glances/develop/docs/_static/glances-responsive-webdesign.png
 
@@ -45,55 +44,57 @@ Glances is written in Python and uses libraries to grab information from
 your system. It is based on an open architecture where developers can
 add new plugins or exports modules.
 
-Requirements
+Glances 基于 Python 开发，使用 Python 的各种类库来获取系统信息。开放的系
+统架构便于开发者开发新的插件，或者将他自己导出成一个模块。
+
+系统需求
 ============
 
 - ``python 2.7,>=3.3``
-- ``psutil>=2.0.0`` (better with latest version)
+- ``psutil>=2.0.0`` (越新越好)
 
-Optional dependencies:
+其他可能的依赖（Glances 有很多模块，各模块会有自身所需的依赖）:
 
-- ``bernhard`` (for the Riemann export module)
-- ``bottle`` (for Web server mode)
-- ``cassandra-driver`` (for the Cassandra export module)
-- ``couchdb`` (for the CouchDB export module)
-- ``docker`` (for the Docker monitoring support) [Linux-only]
-- ``elasticsearch`` (for the Elastic Search export module)
-- ``hddtemp`` (for HDD temperature monitoring support) [Linux-only]
-- ``influxdb`` (for the InfluxDB export module)
-- ``kafka-python`` (for the Kafka export module)
-- ``matplotlib`` (for graphical/chart support)
-- ``netifaces`` (for the IP plugin)
-- ``nvidia-ml-py3`` (for the GPU plugin)
-- ``pika`` (for the RabbitMQ/ActiveMQ export module)
-- ``potsdb`` (for the OpenTSDB export module)
-- ``prometheus_client`` (for the Prometheus export module)
-- ``py-cpuinfo`` (for the Quicklook CPU info module)
-- ``pymdstat`` (for RAID support) [Linux-only]
-- ``pysnmp`` (for SNMP support)
-- ``pystache`` (for the action script feature)
-- ``pyzmq`` (for the ZeroMQ export module)
-- ``requests`` (for the Ports, Cloud plugins and Restful export module)
-- ``scandir`` (for the Folders plugin) [Only for Python < 3.5]
-- ``statsd`` (for the StatsD export module)
-- ``wifi`` (for the wifi plugin) [Linux-only]
-- ``zeroconf`` (for the autodiscover mode)
+- ``bernhard`` (Riemann 导出模块)
+- ``bottle`` (Web 服务器模块)
+- ``cassandra-driver`` (Cassandra 导出模块)
+- ``couchdb`` (CouchDB 导出模块)
+- ``docker`` (Docker 监控支持) [Linux-only]
+- ``elasticsearch`` (Elastic Search 导出模块)
+- ``hddtemp`` (硬盘温度监控支持) [Linux-only]
+- ``influxdb`` (InfluxDB 导出模块)
+- ``kafka-python`` (Kafka 导出模块)
+- ``matplotlib`` (图表支持)
+- ``netifaces`` (IP 插件)
+- ``nvidia-ml-py3`` (GPU 插件)
+- ``pika`` (RabbitMQ/ActiveMQ 导出模块)
+- ``potsdb`` (OpenTSDB 导出模块)
+- ``prometheus_client`` (Prometheus 导出模块)
+- ``py-cpuinfo`` (Quicklook CPU 监控模块)
+- ``pymdstat`` (RAID 支持) [Linux-only]
+- ``pysnmp`` (SNMP 支持)
+- ``pystache`` (action script 特性)
+- ``pyzmq`` (ZeroMQ 导出模块)
+- ``requests`` (Ports, Cloud 插件和 Restful 导出支持)
+- ``scandir`` (Folders 插件) [只针对 Python < 3.5]
+- ``statsd`` (StatsD 导出模块)
+- ``wifi`` (wifi 插件) [Linux-only]
+- ``zeroconf`` (自动搜索模式)
 
-*Note for Python 2.6 users*
+*Python 2.6 用户请注意*
 
-Since version 2.7, Glances no longer support Python 2.6. Please upgrade
-to at least Python 2.7/3.3+ or downgrade to Glances 2.6.2 (latest version
-with Python 2.6 support).
+从 2.7 版开始，Glances 不再支持 Python 2.6。请升级到 Python 2.7/3.3+ 或者降级
+Glances 到 2.6.2（支持 Python 2.6 的最后版本）
 
-*Note for CentOS Linux 6 and 7 users*
+*entOS Linux 6 and 7 用户请注意*
 
-Python 2.7, 3.3 and 3.4 are now available via SCLs. See:
+可以用过 SCLs 安装 Python 2.7, 3.3 and 3.4。参见：
 https://lists.centos.org/pipermail/centos-announce/2015-December/021555.html.
 
-Installation
+安装
 ============
 
-Several method to test/install Glances on your system. Choose your weapon !
+安装测试 Glances 有多种途径供您选择。
 
 Glances Auto Install script: the total way
 ------------------------------------------
